@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+<style>
+    body{
+    font-family: 'Times New Roman', Times, serif;
+}
+section{
+    text-align: center;
+}
+.game-container{
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    width: 306px;
+    margin: 50px auto;
+}
+.cell{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 0 0 3px #333;
+    border: 1px solid #333;
+    cursor: pointer;
+    line-height: 100pc;
+    font-size: 60px;
+}
+</style>
+</head>
+<body>
+    <section>
+        <h1 class="game-title">Tic Tac Toe</h1>
+        <div class="game-container">
+            <div data-cell-index="0" class="cell"></div>
+            <div data-cell-index="1" class="cell"></div>
+            <div data-cell-index="2" class="cell"></div>
+            <div data-cell-index="3" class="cell"></div>
+            <div data-cell-index="4" class="cell"></div>
+            <div data-cell-index="5" class="cell"></div>
+            <div data-cell-index="6" class="cell"></div>
+            <div data-cell-index="7" class="cell"></div>
+            <div data-cell-index="8" class="cell"></div>
+        </div>
+        <h2 class="game-status"></h2>
+        <button class="game-restart">Restart the Game!!</button>
+    </section>
+    <script>
+          /* store our games status element*/
+          const statusDisplay = document.querySelector('.game-status')
+
+          /* declare some var that will use to track the game state of the game 8 */
+          let gameActive = true;
+
+          /* we also want to keep track of the current player, so we know who's turn */
+          let currentPlayer = "X";
+
+          /* we store our current game state here, the form of empty string in will allow us
+          to easily track played cells and vlaidate the game state */
+          let gameState = ["","","","","","","","",""];
+
+          /* here we are declared some message we will display to the user during the game */
+
+          const winningMessage = () => 'player ${currentPlayer} has won!';
+          const drawMessage = () => 'Game ended in a draw';
+          const currentPlayerTurn = () => 'It is ${currentPlayer} turn';
+
+          // we set the intital message to let the player know whose turn is it
+          statusDisplay.innerHTML = currentPlayerTurn();
+
+
+          const winningConditions = [
+              [0,1,2],
+              [3,4,5],
+              [6,7,8],
+              [0,3,6],
+              [1,4,7],
+              [2,5,8],
+              [0,4,8],
+              [2,4,6]
+          ];
+
+          /* mistake in this to function they need to be changed and exchanged */
+          function handleCellPlayed(clickedCell, clickedCellIndex){
+              gameState[clickedCellIndex] = currentPlayer;
+              clickedCell.innerHTML = currentPlayer;
+          }
+
+          function handleCellPlayed(clickedCell, clickedCellIndex){
+              // we will save the clicked html element in a var for easier further use
+              gameState[clickedCellIndex] = currentPlayer;
+              clickedCell.innerHTML = currentPlayer;
+              //const clickedCell = clickedCellEvent.target;
+
+              // this grabs the data-cell-index for the clicked cell
+              // getAttribute will return a string value
+              // since we need a actual number we will parse it to an interfer(number)
+              const clickedCellIndex = parseInt(
+                  clickedCell.getAttribute('data-cell-index')
+              );
+              // need to check if the cell has been played or not
+              if(gameState[clickedCellIndex] !== "" || !gameActive){
+                  return;
+              }
+              // if everything is in order we will proceed with the game flow
+              handleCellPlayed(clickedCell, clickedCellIndex);
+
+              handleResultValidation(){
+              }
+
+          function handelPlayerChanged(){
+              currentPlayer[clickedCellIndex] = currentPlayer;
+              clickedCell.innerHTML = currentPlayer;
+          }
+          function handleResultValidation(){
+              let roundWon = false;
+              for(let i = 0; i <=7; i++){
+                  const winCondition = winningConditions[i];
+                  let a = gameState(winCondition[0]);
+                  let b = gameState(winCondition[1]);
+                  let c = gameState(winCondition[2]);
+                  if(a==='' || b==='' || c===''){
+                      continue;
+                  }
+                  if (a === b && b === c)
+                  roundWon = true;
+                  break;
+              }
+
+                  if (roundWon) {
+                  announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
+                  gameActive = false;
+                  return;
+              }
+                  if (!gameState.includes(''))
+                      announce(TIE);
+          }
+
+          function handleCellClick(){
+
+          }
+          /* listen for the event listener to the actual game cell, as well we want another 
+          lisener for the restart button */
+          document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click,handleCellClick'))
+          document.querySelector('.gameSelector'('.gmae-restart').addEventListener('click, handleRestartGame'))
+
+    </script>
+</body>
+</html>
